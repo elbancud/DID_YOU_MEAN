@@ -1,4 +1,19 @@
-import react from "react";
+import * as React from "react";
+
+interface FormElements extends HTMLFormControlsCollection {
+	phrase: HTMLInputElement;
+}
+interface PhraseInputElement extends HTMLFormElement {
+	readonly elements: FormElements;
+}
+
+function extractInput(input: String) {
+	console.log(input);
+}
+function handleSubmit(event: React.FormEvent<PhraseInputElement>) {
+	event.preventDefault();
+	extractInput(event.currentTarget.phrase.value);
+}
 function MainPage() {
 	return (
 		<div>
@@ -14,7 +29,12 @@ function MainPage() {
 							Enter a phrase?
 						</h2>
 					</div>
-					<form className="mt-8 space-y-6" action="#" method="GET">
+					<form
+						className="mt-8 space-y-6"
+						action="#"
+						method="GET"
+						onSubmit={handleSubmit}
+					>
 						<div className="rounded-md shadow-sm -space-y-px">
 							<div>
 								<label htmlFor="email-address" className="sr-only">
