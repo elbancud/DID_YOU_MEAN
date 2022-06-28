@@ -9,33 +9,34 @@ interface PhraseInputElement extends HTMLFormElement {
 }
 interface IValidWord {
 	valid: boolean;
-	word: string | null;
+	similar: string | null;
 }
-function isNotInTheDictionary(currentWord: string) {
+function findInDictionary(currentWord: string) {
 	// Find the nearest word and store it in the same position
-	// if (currentWord !== dictionary) {
-	// 	return false;
-	// }
-	// const regex = [\*a-z&/]
-	const isValidWord: IValidWord = {
+	const currentWordCase = currentWord.toLowerCase();
+
+	const isWord: IValidWord = {
 		valid: false,
-		word: null,
+		similar: "",
 	};
+
 	Dictionary.map((data) => {
-		// return data.word;
-		if (data.word === currentWord) {
-			isValidWord.valid = true;
-			isValidWord.word = data.word;
+		if (
+			// data.starts_with === currentWordCase[0] &&
+			data.word.toLowerCase() === currentWordCase
+		) {
+			isWord.valid = true;
+			isWord.similar = data.word;
 		}
 		return data;
 	});
-	return isValidWord;
+	return;
 }
 function extracted(input: String) {
 	const inputSplitWhiteSpace = input.split(" ");
 	for (let currentWord of inputSplitWhiteSpace) {
 		// If a word is not in the dictionary store find the closest word.
-		const validateWord = isNotInTheDictionary(currentWord);
+		const validateWord = findInDictionary(currentWord);
 		console.log(validateWord);
 	}
 }
