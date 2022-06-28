@@ -7,24 +7,36 @@ interface FormElements extends HTMLFormControlsCollection {
 interface PhraseInputElement extends HTMLFormElement {
 	elements: FormElements;
 }
-interface IValidWord {
-	valid: boolean;
-	similar: string | null;
-}
+
 function findInDictionary(currentWord: string) {
 	// Find the nearest word and store it in the same position
 	const currentWordCase = currentWord.toLowerCase();
 	let word = "";
 
 	Dictionary.map((data) => {
-		if (
-			// data.starts_with === currentWordCase[0] &&
-			data.word.toLowerCase() === currentWordCase
-		) {
+		if (data.word.toLowerCase() === currentWordCase) {
 			word = data.word;
+			return word;
 		} else {
-			Dictionary.map((word) => {
-				let currentWordSplit = currentWord.split("");
+			Dictionary.map((dict) => {
+				let currentWordSplit: string[] = currentWord.split("");
+				let currentWordDictionarySplit: string[] = dict.word.split("");
+
+				let currentDictionaryWordLength: number = dict.word.length;
+				let letterMatchCount: number = 0;
+
+				let standardPercentOfMatch: number = Math.floor(
+					0.5 * currentDictionaryWordLength
+				);
+
+				for (let i in currentWordDictionarySplit) {
+					if (currentWordDictionarySplit[i] === currentWordSplit[i]) {
+						letterMatchCount++;
+					}
+				}
+				if (letterMatchCount >= standardPercentOfMatch) {
+					return (word = dict.word);
+				}
 			});
 		}
 		return data;
@@ -39,7 +51,7 @@ function extracted(input: String) {
 		const validateWord = findInDictionary(currentWord);
 		paraphrased += validateWord + " ";
 	}
-	console.log(paraphrased);
+	return paraphrased;
 }
 
 function handleSubmit(event: React.FormEvent<PhraseInputElement>) {
