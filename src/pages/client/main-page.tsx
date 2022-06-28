@@ -8,47 +8,48 @@ interface PhraseInputElement extends HTMLFormElement {
 	elements: FormElements;
 }
 
-function findInDictionary(currentWord: string) {
+function isInTheDictionary(currentWord: string) {
 	// Find the nearest word and store it in the same position
 	const currentWordCase = currentWord.toLowerCase();
-	let word = "";
-
-	Dictionary.map((data) => {
-		if (data.word.toLowerCase() === currentWordCase) {
-			word = data.word;
-			return word;
-		} else {
-			Dictionary.map((dict) => {
-				let currentWordSplit: string[] = currentWord.split("");
-				let currentWordDictionarySplit: string[] = dict.word.split("");
-
-				let currentDictionaryWordLength: number = dict.word.length;
-				let letterMatchCount: number = 0;
-
-				let standardPercentOfMatch: number = Math.floor(
-					0.5 * currentDictionaryWordLength
-				);
-
-				for (let i in currentWordDictionarySplit) {
-					if (currentWordDictionarySplit[i] === currentWordSplit[i]) {
-						letterMatchCount++;
-					}
-				}
-				if (letterMatchCount >= standardPercentOfMatch) {
-					return (word = dict.word);
-				}
-			});
+	for (let i of Dictionary) {
+		if (i.word.toLowerCase() === currentWordCase) {
+			return true;
 		}
-		return data;
-	});
-	return word;
+	}
+	return false;
 }
-function extracted(input: String) {
-	const inputSplitWhiteSpace = input.split(" ");
-	let paraphrased = "";
+function findNearestSuggestion(currentWord: string) {
+	for (let j of Dictionary) {
+		let currentWordSplit: string[] = currentWord.split("");
+		let currentWordDictionarySplit: string[] = j.word.split("");
+		// 4
+		let currentDictionaryWordLength: number = j.word.length;
+
+		let letterMatchCount: number = 0;
+		for (let k in currentWordDictionarySplit) {
+			if (currentWordSplit[k] === currentWordDictionarySplit[k]) {
+				letterMatchCount++;
+			}
+		}
+		if (
+			letterMatchCount >= Math.floor(0.95 * currentDictionaryWordLength) ||
+			letterMatchCount >= Math.floor(0.5 * currentDictionaryWordLength)
+		) {
+			return j.word;
+		}
+		// return j.word;
+	}
+	return currentWord;
+}
+
+function extracted(input: string): string {
+	const inputSplitWhiteSpace: string[] = input.split(" ");
+	let paraphrased: string = "";
 	for (let currentWord of inputSplitWhiteSpace) {
 		// If a word is not in the dictionary store find the closest word.
-		const validateWord = findInDictionary(currentWord);
+		const validateWord: string | boolean = isInTheDictionary(currentWord)
+			? currentWord
+			: findNearestSuggestion(currentWord);
 		paraphrased += validateWord + " ";
 	}
 	console.log("Did you mean: " + paraphrased);
