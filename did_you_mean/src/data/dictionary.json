@@ -1,0 +1,5 @@
+[
+	{ "starts_with": "a", "word": "AAAA" },
+	{ "starts_with": "a", "word": "AA" },
+	{ "starts_with": "a", "word": "A" }
+]

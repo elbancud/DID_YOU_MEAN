@@ -1,18 +1,47 @@
 import * as React from "react";
-
+import Dictionary from "../../data/dictionary.json";
+// Extends a collection of HTML form control elements.
 interface FormElements extends HTMLFormControlsCollection {
 	phrase: HTMLInputElement;
 }
 interface PhraseInputElement extends HTMLFormElement {
-	readonly elements: FormElements;
+	elements: FormElements;
 }
-
-function extractInput(input: String) {
-	console.log(input);
+interface IValidWord {
+	valid: boolean;
+	word: string | null;
+}
+function isNotInTheDictionary(currentWord: string) {
+	// Find the nearest word and store it in the same position
+	// if (currentWord !== dictionary) {
+	// 	return false;
+	// }
+	// const regex = [\*a-z&/]
+	const isValidWord: IValidWord = {
+		valid: false,
+		word: null,
+	};
+	Dictionary.map((data) => {
+		// return data.word;
+		if (data.word === currentWord) {
+			isValidWord.valid = true;
+			isValidWord.word = data.word;
+		}
+		return data;
+	});
+	return isValidWord;
+}
+function extracted(input: String) {
+	const inputSplitWhiteSpace = input.split(" ");
+	for (let currentWord of inputSplitWhiteSpace) {
+		// If a word is not in the dictionary store find the closest word.
+		const validateWord = isNotInTheDictionary(currentWord);
+		console.log(validateWord);
+	}
 }
 function handleSubmit(event: React.FormEvent<PhraseInputElement>) {
 	event.preventDefault();
-	extractInput(event.currentTarget.phrase.value);
+	extracted(event.currentTarget.phrase.value);
 }
 function MainPage() {
 	return (
@@ -46,7 +75,7 @@ function MainPage() {
 									type="text"
 									autoComplete="phrase"
 									required
-									className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+									className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
 									placeholder="Input"
 								/>
 							</div>
