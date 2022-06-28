@@ -19,9 +19,9 @@ function isInTheDictionary(currentWord: string) {
 	}
 	return false;
 }
-// Return the word which contains 95% or 50% of the current word
+// Return the word which contains 95% or 50% of the current word2
 // If there's no slightly similar then just return the current word
-function findNearestSuggestion(currentWord: string) {
+function findNearestSuggestion(currentWord: string): string {
 	// Loop through the dictionary.
 	for (let j of Dictionary) {
 		// Variables
