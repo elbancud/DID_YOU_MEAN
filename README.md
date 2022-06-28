@@ -36,6 +36,8 @@ returns > Did you mean: What the dog doing ?
 # Next Tasks
 
 ```
+[] Populate dictionary
+    - Current reference: www.oxfordlearnersdictionaries.com/us/wordlist/american_english/oxford3000/Oxford3000_A-B/?page=1
 [] Unit testing | JEST or React Testing library
 [] Clean up, apply principles well not practically, methodically. or just clean code
 [] Migrate demo from api
