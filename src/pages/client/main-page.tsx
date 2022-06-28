@@ -14,32 +14,34 @@ interface IValidWord {
 function findInDictionary(currentWord: string) {
 	// Find the nearest word and store it in the same position
 	const currentWordCase = currentWord.toLowerCase();
-
-	const isWord: IValidWord = {
-		valid: false,
-		similar: "",
-	};
+	let word = "";
 
 	Dictionary.map((data) => {
 		if (
 			// data.starts_with === currentWordCase[0] &&
 			data.word.toLowerCase() === currentWordCase
 		) {
-			isWord.valid = true;
-			isWord.similar = data.word;
+			word = data.word;
+		} else {
+			Dictionary.map((word) => {
+				let currentWordSplit = currentWord.split("");
+			});
 		}
 		return data;
 	});
-	return;
+	return word;
 }
 function extracted(input: String) {
 	const inputSplitWhiteSpace = input.split(" ");
+	let paraphrased = "";
 	for (let currentWord of inputSplitWhiteSpace) {
 		// If a word is not in the dictionary store find the closest word.
 		const validateWord = findInDictionary(currentWord);
-		console.log(validateWord);
+		paraphrased += validateWord + " ";
 	}
+	console.log(paraphrased);
 }
+
 function handleSubmit(event: React.FormEvent<PhraseInputElement>) {
 	event.preventDefault();
 	extracted(event.currentTarget.phrase.value);
@@ -56,7 +58,7 @@ function MainPage() {
 							alt="Workflow"
 						/> */}
 						<h2 className="mt-6 text-center text-xl font-extrabold ">
-							Enter a phrase?
+							phrase?
 						</h2>
 					</div>
 					<form
