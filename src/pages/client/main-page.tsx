@@ -51,6 +51,7 @@ function extracted(input: String) {
 		const validateWord = findInDictionary(currentWord);
 		paraphrased += validateWord + " ";
 	}
+	console.log("Did you mean: " + paraphrased);
 	return paraphrased;
 }
 
