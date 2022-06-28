@@ -27,3 +27,21 @@ returns > Did you mean: What the dog doing ?
 ... map through the dictionary again beginning with the first letter ...
 ... then replace the current word with the closest word ...
 ```
+
+# Current Bug | To fix
+
+```
+[] Words which comes first to a possible word suggestion is being return ...
+    ... algorithm that measures whether or not the word got the letter ...
+    ... should be dynamic as to how it would return the posible shit.
+```
+
+# Next Tasks
+
+```
+[] Unit testing | JEST or React Testing library
+[] Clean up, apply principles well not practically, methodically. or just clean code
+[] Migrate demo from api
+[] Research about npm packages
+[] wrap up dictionary for words
+```
