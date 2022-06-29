@@ -54,7 +54,7 @@ function findNearestSuggestion(currentWord: string): string {
 		}
 	}
 	lastInput = currentWord;
-	return currentWord;
+	return lastOutput;
 }
 
 function extracted(input: string): string {
