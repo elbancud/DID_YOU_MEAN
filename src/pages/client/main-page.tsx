@@ -8,10 +8,14 @@ interface PhraseInputElement extends HTMLFormElement {
 	elements: FormElements;
 }
 
+let lastInput: string = "";
+let lastOutput: string = "";
+
 // Return true if the current word is in the dictionary
 function isInTheDictionary(currentWord: string) {
 	const currentWordCase = currentWord.toLowerCase();
 	// loop through the dictionary.
+
 	for (let i of Dictionary) {
 		if (i.word.toLowerCase() === currentWordCase) {
 			return true;
@@ -23,6 +27,9 @@ function isInTheDictionary(currentWord: string) {
 // If there's no slightly similar then just return the current word
 function findNearestSuggestion(currentWord: string): string {
 	// Loop through the dictionary.
+	if (currentWord === lastInput) {
+		return lastOutput;
+	}
 	for (let j of Dictionary) {
 		// Variables
 		let currentWordSplit: string[] = currentWord.split("");
@@ -37,12 +44,16 @@ function findNearestSuggestion(currentWord: string): string {
 			}
 		}
 		if (
-			letterMatchCount >= Math.floor(0.95 * currentDictionaryWordLength) ||
-			letterMatchCount >= Math.floor(0.5 * currentDictionaryWordLength)
+			// letterMatchCount >= 3
+			// ||
+			letterMatchCount > Math.floor(0.1 * currentDictionaryWordLength) &&
+			letterMatchCount > Math.floor(0.5 * currentDictionaryWordLength)
 		) {
+			lastOutput = j.word;
 			return j.word;
 		}
 	}
+	lastInput = currentWord;
 	return currentWord;
 }
 
