@@ -28,9 +28,10 @@ returns > Did you mean: What the dog doing ?
 # Current Bug | To fix
 
 ```
-[] Words which comes first to a possible word suggestion is being return ...
+[x] Words which comes first to a possible word suggestion is being return ...
     ... algorithm that measures whether or not the word got the letter ...
     ... should be dynamic as to how it would return the posible shit.
+    // FIXED
 ```
 
 # Next Tasks
