@@ -31,7 +31,6 @@ function findNearestSuggestion(currentWord: string): string {
 		return lastOutput;
 	}
 	for (let j of Dictionary) {
-		// Variables
 		let currentWordSplit: string[] = currentWord.split("");
 		let currentWordDictionarySplit: string[] = j.word.split("");
 		let currentDictionaryWordLength: number = j.word.length;
@@ -39,21 +38,26 @@ function findNearestSuggestion(currentWord: string): string {
 		// Loop in in the splitted words of current word and current word in the dictionary
 		// MUST: be delegated as it is repeating.
 		for (let k in currentWordDictionarySplit) {
-			if (currentWordSplit[k] === currentWordDictionarySplit[k]) {
-				letterMatchCount++;
+			// Algorithm in context
+			// [a][b][i][l][i][t][y]
+			// [a][b][i][s][w][t][y] = ability
+			for (let i in currentWordSplit) {
+				if (
+					currentWordSplit[i] === currentWordDictionarySplit[k] &&
+					currentWordSplit.indexOf(currentWordSplit[i]) ===
+						currentWordDictionarySplit.indexOf(currentWordDictionarySplit[k])
+				) {
+					letterMatchCount++;
+				}
 			}
 		}
-		if (
-			// letterMatchCount >= 3
-			// ||
-			letterMatchCount > Math.floor(0.1 * currentDictionaryWordLength) &&
-			letterMatchCount > Math.floor(0.5 * currentDictionaryWordLength)
-		) {
+		if (letterMatchCount > Math.floor(0.5 * currentDictionaryWordLength)) {
 			lastOutput = j.word;
-			return j.word;
+			return lastOutput;
 		}
 	}
 	lastInput = currentWord;
+	lastOutput = currentWord;
 	return lastOutput;
 }
 
